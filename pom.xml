@@ -17,6 +17,8 @@
         <lombok.version>1.18.22</lombok.version>
         <keycloak.version>18.0.0.redhat-00001</keycloak.version>
         <auto-service.version>1.0.1</auto-service.version>
+
+        <version.wildfly.maven.plugin>1.2.2.Final</version.wildfly.maven.plugin>
     </properties>
 
     <dependencies>
@@ -62,7 +64,6 @@
             <scope>provided</scope>
             <optional>true</optional>
         </dependency>
-
     </dependencies>
 
     <build>
@@ -77,11 +78,22 @@
                         <manifestEntries>
                             <!-- Adding explicit dependencies to avoid class-loading issues at runtime -->
                             <Dependencies>
-                                <![CDATA[org.keycloak.keycloak-common,org.keycloak.keycloak-core,org.keycloak.keycloak-server-spi,org.keycloak.keycloak-server-spi-private,org.apache.httpcomponents,org.keycloak.keycloak-services,org.jboss.logging,javax.api,javax.jms.api,javax.transaction.api,com.fasterxml.jackson.core.jackson-core,com.fasterxml.jackson.core.jackson-annotations,com.fasterxml.jackson.core.jackson-databind]]></Dependencies>
+                                <![CDATA[org.keycloak.keycloak-common,org.keycloak.keycloak-core,org.keycloak.keycloak-server-spi,org.keycloak.keycloak-server-spi-private,org.apache.httpcomponents,org.keycloak.keycloak-services,org.jboss.logging,javax.api,javax.jms.api,javax.transaction.api,com.fasterxml.jackson.core.jackson-core,com.fasterxml.jackson.core.jackson-annotations,com.fasterxml.jackson.core.jackson-databind]]>
+                            </Dependencies>
                         </manifestEntries>
                     </archive>
                 </configuration>
             </plugin>
+
+			<plugin>
+				<groupId>org.wildfly.plugins</groupId>
+				<artifactId>wildfly-maven-plugin</artifactId>
+				<version>${version.wildfly.maven.plugin}</version>
+				<configuration>
+					<hostname>localhost</hostname>
+					<port>10090</port>
+				</configuration>
+			</plugin>            
         </plugins>
     </build>
 </project>

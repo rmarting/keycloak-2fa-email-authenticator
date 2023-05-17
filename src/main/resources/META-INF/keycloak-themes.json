@@ -2,9 +2,7 @@
   "themes": [
     {
       "name": "email-code-theme",
-      "types": [
-        "email"
-      ]
+      "types": [ "login", "email" ]
     }
   ]
 }

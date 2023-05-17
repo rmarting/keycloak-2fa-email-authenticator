@@ -1,11 +1,13 @@
 # 🔒 Keycloak 2FA Email Authenticator
 
-Keycloak Authentication Provider implementation to get a two factor authentication with an OTP/code/token send via Email (through SMTP)
+Keycloak Authentication Provider implementation to get a two factor authentication with an OTP/code/token send via Email (through SMTP).
 
-When logging in with this provider, you can send a verification code (otp) to the user's e-mail address.
-Tested with Keycloak version 19.x, if you are using different Keycloak version, don't forget to change the version in pom.xml file.
+When logging in with this provider, you can send a verification code (OTP) to the user's e-mail address.
+Tested with Keycloak version 19.x (and Red Hat Single Sign-On 7.6), if you are using different Keycloak version, don't forget to change the
+version in `pom.xml` file.
 
-The [Server Development part of the Keycloak reference documentation](https://www.keycloak.org/docs/latest/server_development/index.html) contains additional resources and examples for developing custom Keycloak extensions.
+The [Server Development part of the Keycloak reference documentation](https://www.keycloak.org/docs/latest/server_development/index.html) contains
+additional resources and examples for developing custom Keycloak extensions.
 
 # 🚀 Deployment
 
@@ -23,25 +25,25 @@ Copy it into `deployments` folder of Red Hat Single Sign On:
 cp target/keycloak-2fa-email-authenticator.jar $RHSSO_HOME/standalone/deployments/
 ```
 
-## Theme Resources
-
-There are a set of theme resources in the `src/main/resources/theme` folder as templates for the emails.
-
-**email-code-theme/html/code-email.ftl** is a html email template (_themes/base/email/html/_)
-**email-code-theme/text/code-email.ftl** is a text email template (_themes/base/email/text/_)
-**email-code-theme/messages/*.properties** include translations for the email templates (Append to _themes/base/email/messages/messages_en.properties_
-**theme-resources/templates/email-code-form.ftl** is a form template for the Email OTP (_themes/base/login)
-
-To copy into your local Red Hat Single Sign-On instance:
+Or the recommended Wildfly Maven Plug-in (review the configuration in the `pom.xml` file):
 
 ```shell
-cp -r src/main/resources/theme/email-code-theme/email/html $RHSSO_HOME/themes/base/email
-cp -r src/main/resources/theme/email-code-theme/email/text $RHSSO_HOME/themes/base/email
-cp src/main/resources/theme-resources/templates/email-code-form.ftl $RHSSO_HOME/themes/base/login/
+mvn wildfly:deploy
 ```
 
-The `append-messages.sh` script can help you to append the content of the `messages` folder
-into your Red Hat Single Sign-On instance
+## Theme Resources
+
+There are a set of theme resources in the `src/main/resources/theme` folder as templates for the emails:
+
+**email-code-theme/email/html/code-email.ftl** is a html email template (_themes/base/email/html/_)
+**email-code-theme/email/text/code-email.ftl** is a text email template (_themes/base/email/text/_)
+**email-code-theme/email/messages/*.properties** include translations for the email templates (Append to _themes/base/email/messages/messages_en.properties_
+**email-code-theme/login/email-code-form.ftl** is a form template for the Email OTP (_themes/base/login)
+
+The folder includes more resources as it is an copy of the original `base` and `keycloak` themes to include all the
+resources needed.
+
+This theme is already included in the package created and deployed following the instructions described above.
 
 # Configuration
 
@@ -71,6 +73,13 @@ The Email configuration in Red Hat Single Sign-On is defined at realm level, sim
 this screenshot:
 
 ![Realm Email Settings](./static/realm-email-settings.png)
+
+## Theme Configuration
+
+The Theme configuration in Red Hat Single Sign-On is defined at realm level, similar
+this screenshot:
+
+![Realm Theme Settings](./static/realm-theme-settings.png)
 
 ## Authentication Flow
 
